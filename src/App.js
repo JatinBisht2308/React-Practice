@@ -1,4 +1,5 @@
 import "./App.css";
+import AutoComplete from "./components/AutoComplete";
 import Counter from "./components/Counter";
 import DisplayList from "./components/DisplayList";
 import DynamicUserInput from "./components/DynamicUserInput";
@@ -21,6 +22,7 @@ function App() {
       <DisplayList/>
       <ToggleSwitch/>
       <SimpleFetchData/>
+      <AutoComplete/>
     </div>
   );
 }
