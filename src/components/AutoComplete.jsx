@@ -5,10 +5,14 @@ const AutoComplete = () => {
   const [availableOptions, setAvailableOptions] = useState([]);
   const [loading, setLoading] = useState(false); // ✅ Added loading state
   const [error, setError] = useState(null); // ✅ Added error state
+  const [showResults, setShowResults] = useState(false);
 
   // ✅ Debounced search function to prevent excessive API calls
-  const handleSearch = useCallback(() => {
-    if (!searchTerm.trim()) return; // ✅ Prevent empty searches
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      setAvailableOptions([]); // ✅ Clear options when input is empty
+      return;
+    }
 
     setLoading(true);
     setError(null);
@@ -25,7 +29,7 @@ const AutoComplete = () => {
         console.error("Error fetching data:", error);
       })
       .finally(() => setLoading(false)); // ✅ Ensuring state resets after API call
-  }, [searchTerm]);
+  };
 
   // ✅ Debounced useEffect to reduce API calls on fast typing
   useEffect(() => {
@@ -34,45 +38,55 @@ const AutoComplete = () => {
     }, 300); // ✅ 300ms delay before API call
 
     return () => clearTimeout(delayDebounceFn); // ✅ Cleanup function
-  }, [searchTerm, handleSearch]);
+  }, [searchTerm]);
 
   return (
-    <div style={{ marginBottom: "500px", border: "2px solid black" }}>
+    <div
+      style={{
+        marginBottom: "500px",
+        border: "2px solid black",
+        padding: "20px",
+      }}
+    >
       <h1>Autocomplete suggestions on search</h1>
       <input
-      style={{
-        width:"400px",
-        height:"20px"
-      }}    
+        style={{
+          width: "400px",
+          height: "20px",
+        }}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Search recipes..."
+        onFocus={() => setShowResults(true)}
+        onBlur={() => setShowResults(false)}
       />
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <ul
-      style={{
-        listStyle: "none",
-        padding: "5px",
-        width:"400px",
-        margin:"auto",
-        display:"flex",
-        alignItems:"flex-start",
-        flexDirection:"column",
-        gap:"4px",
-        background:"lightBlue",
-      }}
+        style={{
+          listStyle: "none",
+          width: "400px",
+          margin: "auto",
+          display: "flex",
+          alignItems: "flex-start",
+          flexDirection: "column",
+          gap: "4px",
+          background: "lightBlue",
+          maxHeight:"100px",
+          overflowY:"scroll",
+        }}
       >
-        {availableOptions.map((item) => (
-          <li
-            key={item.id} // ✅ Added unique key for performance
-            style={{ cursor: "pointer" }}
-            onClick={() => setSearchTerm(item.name)}
-          >
-            {item.name}
-          </li>
-        ))}
+        {showResults && !loading && 
+          availableOptions.map((item) => (
+            <li
+              key={item.id} // ✅ Added unique key for performance
+              style={{ cursor: "pointer" }}
+              onClick={() => setSearchTerm(item.name)}
+            >
+              {item.name}
+            </li>
+          ))}
       </ul>
     </div>
   );
