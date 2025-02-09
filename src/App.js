@@ -1,6 +1,7 @@
 import "./App.css";
 import AutoComplete from "./components/AutoComplete";
 import Counter from "./components/Counter";
+import DebouncedButtonClick from "./components/DebouncedButtonClick";
 import DisplayList from "./components/DisplayList";
 import DynamicUserInput from "./components/DynamicUserInput";
 import SimpleFetchData from "./components/SimpleFetchData";
@@ -23,6 +24,7 @@ function App() {
       <ToggleSwitch/>
       <SimpleFetchData/>
       <AutoComplete/>
+      <DebouncedButtonClick/>
     </div>
   );
 }

@@ -43,7 +43,6 @@ const AutoComplete = () => {
   return (
     <div
       style={{
-        marginBottom: "500px",
         border: "2px solid black",
         padding: "20px",
       }}
