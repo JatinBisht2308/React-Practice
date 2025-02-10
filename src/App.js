@@ -4,6 +4,7 @@ import Counter from "./components/Counter";
 import DebouncedButtonClick from "./components/DebouncedButtonClick";
 import DisplayList from "./components/DisplayList";
 import DynamicUserInput from "./components/DynamicUserInput";
+import { Dashboard, Profile } from "./components/HigherOrderComponent";
 import LifeCycleMethod from "./components/LifeCycleMethod";
 import SimpleFetchData from "./components/SimpleFetchData";
 import ToggleSwitch from "./components/ToggleSwitch";
@@ -27,6 +28,8 @@ function App() {
       <AutoComplete />
       <DebouncedButtonClick />
       <LifeCycleMethod />
+      <Dashboard isAuthenticated={true} name={"Jatin"} />
+      <Profile isAuthenticated={false} name={"Jatin"} />
     </div>
   );
 }
